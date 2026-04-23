@@ -1,9 +1,9 @@
-name: Build JRebel License Server
+name: Build JRebel Multi-Arch
 
 on:
   push:
     branches: [ master ]
-  workflow_dispatch:  # 允许手动触发
+  workflow_dispatch:
 
 jobs:
   build:
@@ -11,12 +11,10 @@ jobs:
     permissions:
       packages: write
       contents: read
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Set up QEMU (支持多架构)
+      - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
 
       - name: Set up Docker Buildx
@@ -29,11 +27,15 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build and push Docker image (x86_64 + arm64)
+      # 自动转小写，解决你现在的报错！
+      - name: Lowercase owner
+        id: repo
+        run: echo "owner=${GITHUB_REPOSITORY_OWNER,,}" >> "$GITHUB_OUTPUT"
+
+      - name: Build and push
         uses: docker/build-push-action@v6
         with:
           context: .
           push: true
           platforms: linux/amd64,linux/arm64
-          tags: |
-            ghcr.io/${{ github.repository_owner }}/jrebel-license:latest
+          tags: ghcr.io/${{ steps.repo.outputs.owner }}/jrebel-license:latest
