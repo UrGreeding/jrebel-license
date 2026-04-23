@@ -1,5 +1,5 @@
 # 使用一个轻量的 JRE 镜像作为运行环境
-FROM eclipse-temurin:17-jre-alpine
+FROM eclipse-temurin:21-jre-alpine
 
 # 设置工作目录
 WORKDIR /app
