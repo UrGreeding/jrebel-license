@@ -33,6 +33,10 @@
 
 ## 📦 打包部署
 
+# 可以fork到个人仓库，然后运行action，在右侧packages中即可获得docker地址
+# 可以fork到个人仓库，然后运行action，在右侧packages中即可获得docker地址
+# 可以fork到个人仓库，然后运行action，在右侧packages中即可获得docker地址
+
 ### 1. 项目打包
 
 ```bash
